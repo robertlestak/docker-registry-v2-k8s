@@ -1,0 +1,22 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: registry
+  namespace: tools
+  annotations:
+    istio-service-index.v1.lestak.sh/description: "Internal docker registry"
+    istio-service-index.v1.lestak.sh/category: "tools"
+spec:
+  hosts:
+  - "registry.int"
+  - "registry.lestak.sh"
+  gateways:
+  - istio-system/ingressgateway
+  http:
+  - match:
+    - uri:
+        prefix: "/"
+    route:
+    - destination:
+        host: registry
